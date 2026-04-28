@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @file    gyro.h
+  * @file    ts.h
   * @author  MCD Application Team
   * @version V4.0.1
   * @date    21-July-2015
-  * @brief   This header file contains the functions prototypes for the gyroscope driver.
+  * @brief   This file contains all the functions prototypes for the Touch Screen driver.
   ******************************************************************************
   * @attention
   *
@@ -34,18 +34,17 @@
   *
   ******************************************************************************
   */
-  
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __GYRO_H
-#define __GYRO_H
+#ifndef __TS_H
+#define __TS_H
 
 #ifdef __cplusplus
  extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include <stdint.h>
+#include <stdint.h> 
 
 /** @addtogroup BSP
   * @{
@@ -55,67 +54,30 @@
   * @{
   */
     
-/** @addtogroup GYRO
+/** @addtogroup TS
   * @{
   */
 
-/** @defgroup GYRO_Exported_Types
+/** @defgroup TS_Exported_Types
   * @{
   */
 
-/** @defgroup GYRO_Driver_structure  Gyroscope Driver structure
+/** @defgroup TS_Driver_structure  Touch Sensor Driver structure
   * @{
   */
 typedef struct
 {  
   void       (*Init)(uint16_t);
-  void       (*DeInit)(void); 
-  uint8_t    (*ReadID)(void);
-  void       (*Reset)(void);
-  void       (*LowPower)(uint16_t);   
-  void       (*ConfigIT)(uint16_t); 
-  void       (*EnableIT)(uint8_t);
-  void       (*DisableIT)(uint8_t);  
-  uint8_t    (*ITStatus)(uint16_t, uint16_t);   
-  void       (*ClearIT)(uint16_t, uint16_t); 
-  void       (*FilterConfig)(uint8_t);  
-  void       (*FilterCmd)(uint8_t);  
-  void       (*GetXYZ)(float *);
-}GYRO_DrvTypeDef;
-/**
-  * @}
-  */
-
-/** @defgroup GYRO_Config_structure  Gyroscope Configuration structure
-  * @{
-  */
-
-typedef struct
-{
-  uint8_t Power_Mode;                         /* Power-down/Sleep/Normal Mode */
-  uint8_t Output_DataRate;                    /* OUT data rate */
-  uint8_t Axes_Enable;                        /* Axes enable */
-  uint8_t Band_Width;                         /* Bandwidth selection */
-  uint8_t BlockData_Update;                   /* Block Data Update */
-  uint8_t Endianness;                         /* Endian Data selection */
-  uint8_t Full_Scale;                         /* Full Scale selection */
-}GYRO_InitTypeDef;
-
-/* GYRO High Pass Filter struct */
-typedef struct
-{
-  uint8_t HighPassFilter_Mode_Selection;      /* Internal filter mode */
-  uint8_t HighPassFilter_CutOff_Frequency;    /* High pass filter cut-off frequency */
-}GYRO_FilterConfigTypeDef;
-
-/*GYRO Interrupt struct */
-typedef struct
-{
-  uint8_t Latch_Request;                      /* Latch interrupt request into CLICK_SRC register */
-  uint8_t Interrupt_Axes;                     /* X, Y, Z Axes Interrupts */ 
-  uint8_t Interrupt_ActiveEdge;               /* Interrupt Active edge */
-}GYRO_InterruptConfigTypeDef;  
-
+  uint16_t   (*ReadID)(uint16_t);
+  void       (*Reset)(uint16_t);
+  void       (*Start)(uint16_t);
+  uint8_t    (*DetectTouch)(uint16_t);
+  void       (*GetXY)(uint16_t, uint16_t*, uint16_t*);
+  void       (*EnableIT)(uint16_t);
+  void       (*ClearIT)(uint16_t);
+  uint8_t    (*GetITStatus)(uint16_t);
+  void       (*DisableIT)(uint16_t);
+}TS_DrvTypeDef;
 /**
   * @}
   */
@@ -140,6 +102,6 @@ typedef struct
 }
 #endif
 
-#endif /* __GYRO_H */
+#endif /* __TS_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

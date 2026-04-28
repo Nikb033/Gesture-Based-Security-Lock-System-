@@ -1,14 +1,13 @@
 /**
   ******************************************************************************
-  * @file    gyro.h
+  * @file    stm32f429i_discovery_gyroscope.h
   * @author  MCD Application Team
-  * @version V4.0.1
-  * @date    21-July-2015
-  * @brief   This header file contains the functions prototypes for the gyroscope driver.
+  * @brief   This file contains definitions for stm32f429i_discovery_gyroscope.c 
+  *          firmware driver.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2015 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -35,86 +34,69 @@
   ******************************************************************************
   */
   
-
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __GYRO_H
-#define __GYRO_H
+#ifndef __STM32F429I_DISCOVERY_GYROSCOPE_H
+#define __STM32F429I_DISCOVERY_GYROSCOPE_H
 
 #ifdef __cplusplus
  extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include <stdint.h>
+#include "stm32f429i_discovery.h"
+/* Include Gyroscope component driver */
+#include "l3gd20.h"
 
 /** @addtogroup BSP
   * @{
   */
+  
+/** @addtogroup STM32F429I_DISCOVERY
+  * @{
+  */ 
 
-/** @addtogroup Components
+/** @addtogroup STM32F429I_DISCOVERY_GYROSCOPE
   * @{
   */
-    
-/** @addtogroup GYRO
+  
+/** @defgroup STM32F429I_DISCOVERY_GYROSCOPE_Exported_Types STM32F429I DISCOVERY GYROSCOPE Exported Types
   * @{
   */
-
-/** @defgroup GYRO_Exported_Types
-  * @{
-  */
-
-/** @defgroup GYRO_Driver_structure  Gyroscope Driver structure
-  * @{
-  */
-typedef struct
-{  
-  void       (*Init)(uint16_t);
-  void       (*DeInit)(void); 
-  uint8_t    (*ReadID)(void);
-  void       (*Reset)(void);
-  void       (*LowPower)(uint16_t);   
-  void       (*ConfigIT)(uint16_t); 
-  void       (*EnableIT)(uint8_t);
-  void       (*DisableIT)(uint8_t);  
-  uint8_t    (*ITStatus)(uint16_t, uint16_t);   
-  void       (*ClearIT)(uint16_t, uint16_t); 
-  void       (*FilterConfig)(uint8_t);  
-  void       (*FilterCmd)(uint8_t);  
-  void       (*GetXYZ)(float *);
-}GYRO_DrvTypeDef;
-/**
-  * @}
-  */
-
-/** @defgroup GYRO_Config_structure  Gyroscope Configuration structure
-  * @{
-  */
-
-typedef struct
+typedef enum 
 {
-  uint8_t Power_Mode;                         /* Power-down/Sleep/Normal Mode */
-  uint8_t Output_DataRate;                    /* OUT data rate */
-  uint8_t Axes_Enable;                        /* Axes enable */
-  uint8_t Band_Width;                         /* Bandwidth selection */
-  uint8_t BlockData_Update;                   /* Block Data Update */
-  uint8_t Endianness;                         /* Endian Data selection */
-  uint8_t Full_Scale;                         /* Full Scale selection */
-}GYRO_InitTypeDef;
+  GYRO_OK = 0,
+  GYRO_ERROR = 1,
+  GYRO_TIMEOUT = 2
+}GYRO_StatusTypeDef;
+/**
+  * @}
+  */
+  
+/** @defgroup STM32F429I_DISCOVERY_GYROSCOPE_Exported_Constants STM32F429I DISCOVERY GYROSCOPE Exported Constants
+  * @{
+  */
+/**
+  * @}
+  */
 
-/* GYRO High Pass Filter struct */
-typedef struct
-{
-  uint8_t HighPassFilter_Mode_Selection;      /* Internal filter mode */
-  uint8_t HighPassFilter_CutOff_Frequency;    /* High pass filter cut-off frequency */
-}GYRO_FilterConfigTypeDef;
-
-/*GYRO Interrupt struct */
-typedef struct
-{
-  uint8_t Latch_Request;                      /* Latch interrupt request into CLICK_SRC register */
-  uint8_t Interrupt_Axes;                     /* X, Y, Z Axes Interrupts */ 
-  uint8_t Interrupt_ActiveEdge;               /* Interrupt Active edge */
-}GYRO_InterruptConfigTypeDef;  
+/** @defgroup STM32F429I_DISCOVERY_GYROSCOPE_Exported_Macros STM32F429I DISCOVERY GYROSCOPE Exported Macros
+  * @{
+  */
+/**
+  * @}
+  */
+ 
+/** @defgroup STM32F429I_DISCOVERY_GYROSCOPE_Exported_Functions STM32F429I DISCOVERY GYROSCOPE Exported Functions
+  * @{
+  */
+/* Gyroscope Functions */ 
+uint8_t BSP_GYRO_Init(void);
+void    BSP_GYRO_Reset(void);
+uint8_t BSP_GYRO_ReadID(void);
+void    BSP_GYRO_ITConfig(GYRO_InterruptConfigTypeDef *pIntConfigStruct);
+void    BSP_GYRO_EnableIT(uint8_t IntPin);
+void    BSP_GYRO_DisableIT(uint8_t IntPin);
+void    BSP_GYRO_GetXYZ(float* pfData);
 
 /**
   * @}
@@ -122,24 +104,20 @@ typedef struct
 
 /**
   * @}
-  */
+  */ 
 
 /**
   * @}
-  */
+  */ 
 
 /**
   * @}
-  */
-
-/**
-  * @}
-  */
+  */ 
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* __GYRO_H */
+#endif /* __STM32F429I_DISCOVERY_GYROSCOPE_H */
 
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
+/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/ 

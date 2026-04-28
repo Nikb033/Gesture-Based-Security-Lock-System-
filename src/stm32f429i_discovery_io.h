@@ -1,14 +1,13 @@
 /**
   ******************************************************************************
-  * @file    gyro.h
+  * @file    stm32f429i_discovery_io.h
   * @author  MCD Application Team
-  * @version V4.0.1
-  * @date    21-July-2015
-  * @brief   This header file contains the functions prototypes for the gyroscope driver.
+  * @brief   This file contains all the functions prototypes for the
+  *          stm32f429i_discovery_io.c driver.
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2015 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2017 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -33,88 +32,83 @@
   * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   *
   ******************************************************************************
-  */
-  
+  */ 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __GYRO_H
-#define __GYRO_H
+#ifndef __STM32F429I_DISCOVERY_IO_H
+#define __STM32F429I_DISCOVERY_IO_H
 
 #ifdef __cplusplus
  extern "C" {
 #endif
 
 /* Includes ------------------------------------------------------------------*/
-#include <stdint.h>
+#include "stm32f429i_discovery.h"
+/* Include IO component driver */
+#include "stmpe811.h"   
 
 /** @addtogroup BSP
   * @{
   */
 
-/** @addtogroup Components
-  * @{
-  */
-    
-/** @addtogroup GYRO
+/** @addtogroup STM32F429I_DISCOVERY
   * @{
   */
 
-/** @defgroup GYRO_Exported_Types
+/** @addtogroup STM32F429I_DISCOVERY_IO
   * @{
   */
 
-/** @defgroup GYRO_Driver_structure  Gyroscope Driver structure
+/** @defgroup STM32F429I_DISCOVERY_IO_Exported_Types STM32F429I DISCOVERY IO Exported Types
   * @{
   */
-typedef struct
-{  
-  void       (*Init)(uint16_t);
-  void       (*DeInit)(void); 
-  uint8_t    (*ReadID)(void);
-  void       (*Reset)(void);
-  void       (*LowPower)(uint16_t);   
-  void       (*ConfigIT)(uint16_t); 
-  void       (*EnableIT)(uint8_t);
-  void       (*DisableIT)(uint8_t);  
-  uint8_t    (*ITStatus)(uint16_t, uint16_t);   
-  void       (*ClearIT)(uint16_t, uint16_t); 
-  void       (*FilterConfig)(uint8_t);  
-  void       (*FilterCmd)(uint8_t);  
-  void       (*GetXYZ)(float *);
-}GYRO_DrvTypeDef;
-/**
-  * @}
-  */
-
-/** @defgroup GYRO_Config_structure  Gyroscope Configuration structure
-  * @{
-  */
-
-typedef struct
+typedef enum 
 {
-  uint8_t Power_Mode;                         /* Power-down/Sleep/Normal Mode */
-  uint8_t Output_DataRate;                    /* OUT data rate */
-  uint8_t Axes_Enable;                        /* Axes enable */
-  uint8_t Band_Width;                         /* Bandwidth selection */
-  uint8_t BlockData_Update;                   /* Block Data Update */
-  uint8_t Endianness;                         /* Endian Data selection */
-  uint8_t Full_Scale;                         /* Full Scale selection */
-}GYRO_InitTypeDef;
+  IO_OK       = 0,
+  IO_ERROR    = 1,
+  IO_TIMEOUT  = 2
+}IO_StatusTypeDef;
+/**
+  * @}
+  */  
 
-/* GYRO High Pass Filter struct */
-typedef struct
-{
-  uint8_t HighPassFilter_Mode_Selection;      /* Internal filter mode */
-  uint8_t HighPassFilter_CutOff_Frequency;    /* High pass filter cut-off frequency */
-}GYRO_FilterConfigTypeDef;
+/** @defgroup STM32F429I_DISCOVERY_IO_Exported_Constants STM32F429I DISCOVERY IO Exported Constants
+  * @{
+  */
+#define IO_PIN_0                     0x01
+#define IO_PIN_1                     0x02
+#define IO_PIN_2                     0x04
+#define IO_PIN_3                     0x08
+#define IO_PIN_4                     0x10
+#define IO_PIN_5                     0x20
+#define IO_PIN_6                     0x40
+#define IO_PIN_7                     0x80
+#define IO_PIN_ALL                   0xFF
+/**
+  * @}
+  */  
 
-/*GYRO Interrupt struct */
-typedef struct
-{
-  uint8_t Latch_Request;                      /* Latch interrupt request into CLICK_SRC register */
-  uint8_t Interrupt_Axes;                     /* X, Y, Z Axes Interrupts */ 
-  uint8_t Interrupt_ActiveEdge;               /* Interrupt Active edge */
-}GYRO_InterruptConfigTypeDef;  
+/** @defgroup STM32F429I_DISCOVERY_IO_Exported_Macros STM32F429I DISCOVERY IO Exported Macros
+  * @{
+  */
+/**
+  * @}
+  */  
+
+/** @defgroup STM32F429I_DISCOVERY_IO_Exported_Functions STM32F429I DISCOVERY IO Exported Functions
+  * @{
+  */
+uint8_t  BSP_IO_Init(void);
+uint8_t  BSP_IO_ITGetStatus(uint16_t IoPin);
+void     BSP_IO_ITClear(void);
+void     BSP_IO_ConfigPin(uint16_t IoPin, IO_ModeTypedef IoMode);
+void     BSP_IO_WritePin(uint16_t IoPin, uint8_t PinState);
+uint16_t BSP_IO_ReadPin(uint16_t IoPin);
+void     BSP_IO_TogglePin(uint16_t IoPin);
+  
+/**
+  * @}
+  */ 
 
 /**
   * @}
@@ -122,15 +116,7 @@ typedef struct
 
 /**
   * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
+  */ 
 
 /**
   * @}
@@ -140,6 +126,6 @@ typedef struct
 }
 #endif
 
-#endif /* __GYRO_H */
+#endif /* __STM32F429I_DISCOVERY_IO_H */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

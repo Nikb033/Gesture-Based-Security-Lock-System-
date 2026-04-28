@@ -1,14 +1,14 @@
 /**
   ******************************************************************************
-  * @file    gyro.h
+  * @file    fonts.h
   * @author  MCD Application Team
-  * @version V4.0.1
-  * @date    21-July-2015
-  * @brief   This header file contains the functions prototypes for the gyroscope driver.
+  * @version V1.0.0
+  * @date    18-February-2014
+  * @brief   Header for fonts.c file
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; COPYRIGHT(c) 2015 STMicroelectronics</center></h2>
+  * <h2><center>&copy; COPYRIGHT(c) 2014 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -34,11 +34,10 @@
   *
   ******************************************************************************
   */
-  
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __GYRO_H
-#define __GYRO_H
+#ifndef __FONTS_H
+#define __FONTS_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -47,91 +46,61 @@
 /* Includes ------------------------------------------------------------------*/
 #include <stdint.h>
 
-/** @addtogroup BSP
+/** @addtogroup Utilities
+  * @{
+  */
+  
+/** @addtogroup STM32_EVAL
+  * @{
+  */ 
+
+/** @addtogroup Common
   * @{
   */
 
-/** @addtogroup Components
+/** @addtogroup FONTS
   * @{
-  */
-    
-/** @addtogroup GYRO
-  * @{
-  */
+  */ 
 
-/** @defgroup GYRO_Exported_Types
+/** @defgroup FONTS_Exported_Types
   * @{
-  */
+  */ 
+typedef struct _tFont
+{    
+  const uint8_t *table;
+  uint16_t Width;
+  uint16_t Height;
+  
+} sFONT;
 
-/** @defgroup GYRO_Driver_structure  Gyroscope Driver structure
-  * @{
-  */
-typedef struct
-{  
-  void       (*Init)(uint16_t);
-  void       (*DeInit)(void); 
-  uint8_t    (*ReadID)(void);
-  void       (*Reset)(void);
-  void       (*LowPower)(uint16_t);   
-  void       (*ConfigIT)(uint16_t); 
-  void       (*EnableIT)(uint8_t);
-  void       (*DisableIT)(uint8_t);  
-  uint8_t    (*ITStatus)(uint16_t, uint16_t);   
-  void       (*ClearIT)(uint16_t, uint16_t); 
-  void       (*FilterConfig)(uint8_t);  
-  void       (*FilterCmd)(uint8_t);  
-  void       (*GetXYZ)(float *);
-}GYRO_DrvTypeDef;
+extern sFONT Font24;
+extern sFONT Font20;
+extern sFONT Font16;
+extern sFONT Font12;
+extern sFONT Font8;
 /**
   * @}
-  */
+  */ 
 
-/** @defgroup GYRO_Config_structure  Gyroscope Configuration structure
+/** @defgroup FONTS_Exported_Constants
   * @{
-  */
-
-typedef struct
-{
-  uint8_t Power_Mode;                         /* Power-down/Sleep/Normal Mode */
-  uint8_t Output_DataRate;                    /* OUT data rate */
-  uint8_t Axes_Enable;                        /* Axes enable */
-  uint8_t Band_Width;                         /* Bandwidth selection */
-  uint8_t BlockData_Update;                   /* Block Data Update */
-  uint8_t Endianness;                         /* Endian Data selection */
-  uint8_t Full_Scale;                         /* Full Scale selection */
-}GYRO_InitTypeDef;
-
-/* GYRO High Pass Filter struct */
-typedef struct
-{
-  uint8_t HighPassFilter_Mode_Selection;      /* Internal filter mode */
-  uint8_t HighPassFilter_CutOff_Frequency;    /* High pass filter cut-off frequency */
-}GYRO_FilterConfigTypeDef;
-
-/*GYRO Interrupt struct */
-typedef struct
-{
-  uint8_t Latch_Request;                      /* Latch interrupt request into CLICK_SRC register */
-  uint8_t Interrupt_Axes;                     /* X, Y, Z Axes Interrupts */ 
-  uint8_t Interrupt_ActiveEdge;               /* Interrupt Active edge */
-}GYRO_InterruptConfigTypeDef;  
+  */ 
+#define LINE(x) ((x) * (((sFONT *)BSP_LCD_GetFont())->Height))
 
 /**
   * @}
-  */
+  */ 
 
+/** @defgroup FONTS_Exported_Macros
+  * @{
+  */ 
 /**
   * @}
-  */
+  */ 
 
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
+/** @defgroup FONTS_Exported_Functions
+  * @{
+  */ 
 /**
   * @}
   */
@@ -139,7 +108,27 @@ typedef struct
 #ifdef __cplusplus
 }
 #endif
+  
+#endif /* __FONTS_H */
+ 
+/**
+  * @}
+  */
 
-#endif /* __GYRO_H */
+/**
+  * @}
+  */ 
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */      
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
